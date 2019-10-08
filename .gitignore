@@ -1,0 +1,9 @@
+# Files to be ignored
+log.txt
+*.csv
+# Jupyter NB files for tests
+performance_tests.ipynb
+.ipynb_checkpoints
+
+# Folders to be ignored
+
