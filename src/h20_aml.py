@@ -5,7 +5,7 @@ from h2o.automl import H2OAutoML
 from sklearn.metrics import mean_squared_error
 
 # Gloal constants:
-TRAIN_PATH = "../input/processed_train.csv"
+TRAIN_PATH = "../input/processed_data.csv"
 TEST_PATH = "../input/processed_test.csv"
 
 # Functions definition:
@@ -24,8 +24,8 @@ if __name__ == "__main__":
     x = train.columns
     y = 'price'
     x.remove(y)
-    x.remove(train['Id'])
-    x_test = test.drop(['Id'],axis=1)
+    x.remove(train['id'])
+    x_test = test.drop(['id'],axis=1)
 
     # Model Initialization and training:
     max_models = 30
@@ -38,11 +38,12 @@ if __name__ == "__main__":
     y_train_pred = aml.predict(x_test)
 
     # Metrics:
-    rmse = mean_squared_error(y,y_train_pred)
+    y_pred = aml.predict(x)
+    rmse = mean_squared_error(y,y_pred)
     print(rmse)
 
     #Output generation:
-    submission = test['Id']
+    submission = test['id']
     submission['Price'] = y_train_pred
     submission = submission.as_data_frame(use_pandas=True)
 
