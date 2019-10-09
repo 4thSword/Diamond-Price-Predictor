@@ -28,7 +28,7 @@ if __name__ == "__main__":
     x_test = test.drop(['id'],axis=1)
 
     # Model Initialization and training:
-    max_models = 30
+    max_models = 40
     seed = 1
 
     aml = H2OAutoML(max_models= max_models, seed=seed)
@@ -38,16 +38,20 @@ if __name__ == "__main__":
     y_train_pred = aml.predict(x_test)
 
     # Metrics:
-    y_pred = aml.predict(x)
-    rmse = mean_squared_error(y,y_pred)
-    print(rmse)
-
+    try:
+        y_pred = aml.predict(train[x])
+        y_pred = p_pred.as_data_frame(use_pandas=True)
+        y_train = train[y].as_data_frame(use_pandas=True)
+        rmse = mean_squared_error(y_train,y_pred)
+        print(rmse)
+    except:
+        rmse = "Not defined"
     #Output generation:
     submission = test['id']
     submission['Price'] = y_train_pred
     submission = submission.as_data_frame(use_pandas=True)
 
-    submission.to_csv('output/submission.csv',index=False)
+    submission.to_csv('../output/submission.csv',index=False)
 
     # Adding metrics to a log, for next study of better model.
     with open('../output/log.txt',"a+") as f: 

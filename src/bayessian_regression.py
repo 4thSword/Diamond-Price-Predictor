@@ -1,7 +1,7 @@
 #Imports
 import pandas as pd
 #from sklearn.decomposition import PCA
-from sklearn.neural_network import MLPRegressor
+from sklearn.linear_model import BayesianRidge
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 
@@ -22,23 +22,24 @@ if __name__ == "__main__":
     data_train = training.drop(['price'],axis = 1)
     data_submit = test.drop(['id'],axis = 1)    
     y = training['price']
+    
+    # PCA
 
     X_train, X_test, y_train, y_test = train_test_split(data_train,y, test_size=0.1)
 
     #Model Training:
     
-    h_layers = 10
-    mlp = MLPRegressor(hidden_layer_sizes=h_layers)
-    mlp.fit(X_train, y_train)
+    l_reg = BayesianRidge(n_iter= 400, verbose=2)
+    l_reg.fit(X_train, y_train)
 
     #Applying trained model to our train set:
-    y_test_pred = mlp.predict(X_test)
+    y_test_pred = l_reg.predict(X_test)
     #checking the error
-    rmse=mean_squared_error(y_test,y_test_pred)
+    rmse = mean_squared_error(y_test,y_test_pred)
     print(rmse)
 
     # Applying model to our submission set:
-    y_pred = mlp.predict(data_submit)
+    y_pred = l_reg.predict(data_submit)
     
 
 
@@ -47,7 +48,7 @@ if __name__ == "__main__":
         'Id':test['id'],
         'Price': y_pred
     })
-    #submission.Price = submission.Price.apply(lambda x: ((x**2)**(1/2)/10))
+    submission.Price = submission.Price.apply(lambda x: ((x**2)**(1/2)))
 
     
     # Generating output file:
@@ -55,4 +56,4 @@ if __name__ == "__main__":
 
     # Adding metrics to a log, for next study of better model.
     with open('../output/log.txt',"a+") as f: 
-        f.write("RMSE: {} | MODEL: MLPRegressor | HIDDEN lAYERS= {} | COLUMNS: {} \n".format(rmse, h_layers, len(training.columns)))
+        f.write("RMSE: {} | MODEL: BR  | COLUMNS: {} \n".format(rmse, len(training.columns))) 

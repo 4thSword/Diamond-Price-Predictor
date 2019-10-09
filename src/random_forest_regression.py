@@ -27,8 +27,8 @@ if __name__ == "__main__":
 
     #Model Training:
     
-    n_estimators = 100
-    rfr = RandomForestRegressor(n_estimators=n_estimators)
+    n_estimators = 200
+    rfr = RandomForestRegressor(n_estimators=n_estimators, verbose=2)
     rfr.fit(X_train, y_train)
 
     #Applying trained model to our train set:
@@ -55,4 +55,4 @@ if __name__ == "__main__":
 
     # Adding metrics to a log, for next study of better model.
     with open('../output/log.txt',"a+") as f: 
-        f.write("RMSE: {} | MODEL: MLPRegressor | N-ESTIMATORS= {} | COLUMNS: {} \n".format(rmse, n_estimators, len(training.columns)))
+        f.write("RMSE: {} | MODEL: Random Forest Regressor | N-ESTIMATORS= {} | COLUMNS: {} \n".format(rmse, n_estimators, len(training.columns)))

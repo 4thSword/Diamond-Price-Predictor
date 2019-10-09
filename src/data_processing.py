@@ -32,6 +32,7 @@ def clean_dataframe(df):
     # getting dummies to be able to apply our model
         
     '''
+    
     df = pd.get_dummies(df)
     '''    
     for column in df:
@@ -62,7 +63,8 @@ if __name__ == "__main__":
     standarize.fit(training_clean[['carat','depth','table', 'x', 'y', 'z']])
     training_clean[['carat','depth','table', 'x', 'y', 'z']]= standarize.transform(training_clean[['carat','depth','table', 'x', 'y', 'z']])
     test_clean[['carat','depth','table', 'x', 'y', 'z']]= standarize.transform(test_clean[['carat','depth','table', 'x', 'y', 'z']])
- 
+    #training_clean.carat = training_clean.carat.apply(lambda x : x*1.18)
+    #test_clean.carat = test_clean.carat.apply(lambda x : x*1.18)
 
     # Frouth step: Export data to csv
 
