@@ -1,4 +1,4 @@
-# Car-Price-Predictor
+# Diamond-Price-Predictor
 
 ## Overview
 
