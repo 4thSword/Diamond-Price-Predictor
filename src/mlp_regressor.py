@@ -26,9 +26,9 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = train_test_split(data_train,y, test_size=0.1)
 
     #Model Training:
-    
+    activation = 'tanh'
     h_layers = 10
-    mlp = MLPRegressor(hidden_layer_sizes=h_layers)
+    mlp = MLPRegressor(hidden_layer_sizes=h_layers,activation= activation)
     mlp.fit(X_train, y_train)
 
     #Applying trained model to our train set:

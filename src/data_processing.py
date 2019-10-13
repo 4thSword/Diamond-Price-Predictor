@@ -20,7 +20,7 @@ def clean_dataframe(df):
     # Clean column by column all data to be able to let our model work properly.
     
     # Dropping columns that I think that could't give us enogh infomration for our prediction
-    # df.drop([],axis=1, inplace=True)
+    df.drop(['x','y'],axis=1, inplace=True)
     
     # Filling nulls in categorical variables by unknown:
     '''
@@ -60,9 +60,9 @@ if __name__ == "__main__":
     #Third step: Standarization
 
     standarize = StandardScaler()
-    standarize.fit(training_clean[['carat','depth','table', 'x', 'y', 'z']])
-    training_clean[['carat','depth','table', 'x', 'y', 'z']]= standarize.transform(training_clean[['carat','depth','table', 'x', 'y', 'z']])
-    test_clean[['carat','depth','table', 'x', 'y', 'z']]= standarize.transform(test_clean[['carat','depth','table', 'x', 'y', 'z']])
+    standarize.fit(training_clean[['carat','depth','table', 'z']])
+    training_clean[['carat','depth','table', 'z']]= standarize.transform(training_clean[['carat','depth','table', 'z']])
+    test_clean[['carat','depth','table', 'z']]= standarize.transform(test_clean[['carat','depth','table', 'z']])
     #training_clean.carat = training_clean.carat.apply(lambda x : x*1.18)
     #test_clean.carat = test_clean.carat.apply(lambda x : x*1.18)
 
